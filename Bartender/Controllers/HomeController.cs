@@ -3,28 +3,41 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Bartender.Models;
 
 namespace Bartender.Controllers
 {
     public class HomeController : Controller
     {
+        private CocktailContext db = new CocktailContext();
+
         public ActionResult Index()
         {
             return View();
         }
-
-        public ActionResult About()
+        
+        public ActionResult Menu()
         {
-            ViewBag.Message = "Your application description page.";
+            return View(db.Cocktails.ToList());
+        }
 
+        public ActionResult Create()
+        {
             return View();
         }
 
-        public ActionResult Contact()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(Cocktail cocktail)
         {
-            ViewBag.Message = "Your contact page.";
+            if (ModelState.IsValid)
+            {
+                db.Cocktails.Add(cocktail);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
 
-            return View();
+            return View(cocktail);
         }
     }
 }
