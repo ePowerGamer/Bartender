@@ -6,46 +6,65 @@
 
 <h2>Menu</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-           
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Price)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th></th>
-    </tr>
+@using (Html.BeginForm())
+{
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @{string pic = "../Content/Cocktails/" + item.Name + ".jpg";}
-            <img src=@pic/>
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Price)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            |
-            @Html.ActionLink("Details", "Details", new { id = item.Name }) |
-        </td>
-    </tr>
+
+    <p>
+        <label for="customer_name" >Name for order:</label>
+        <input type="text" id="customer_name" name="customer_name" />
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @using System.Diagnostics;
+                    @{
+
+                        string pic = Server.MapPath("../Content/Cocktails/" + item.Name + ".jpg");
+                        string path = "../Content/Cocktails/None.jpg";
+                        string alt = "Picture not found";
+                        if (File.Exists(pic))
+                        {
+                            path = "../Content/Cocktails/" + item.Name + ".jpg";
+
+                            alt = item.Name;
+                        }
+                        <img src=@path alt=@alt />
+                    }
+                </td>
+                <td id="name" name="name">
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    <input type="text" name="drink" value="@item.Name" hidden>
+                    <input type="submit" class="btn btn-success" value="ORDER" />
+                </td>
+            </tr>
+        }
+
+    </table>
 }
-
-</table>

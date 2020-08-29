@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Bartender.Models.Order>
+
+@{
+    ViewBag.Title = "Orders";
+}
+@using System.Diagnostics;
+
+<h2>Orders</h2>
+
+<p>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Cocktail)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Customer)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th>
+            Actions
+        </th>
+    </tr>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Cocktail)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Customer)
+        </td>
+                <td>@item.Status.ToString()</td>
+                <td>
+                    @{ string btn_status = "Disabled"; string btn_class = "btn";}
+                    @if (item.Status == Bartender.Models.Order.State.PREPARING)
+                    {
+                        btn_status = "Enabled";
+                        btn_class = "btn btn-success";
+                    }
+                    <input type="button" class="@btn_class" value="READY" onclick="location.href='@Url.Action("Ready", "Home", new { id = item.OrderNo })'" @btn_status/>
+                    <input type="button" class="btn btn-danger" value="DELETE" onclick="location.href='@Url.Action("Delete", "Home", new { id = item.OrderNo })'" />
+                </td>
+    </tr>
+}
+
+</table>
