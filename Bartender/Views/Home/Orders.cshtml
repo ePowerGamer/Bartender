@@ -43,7 +43,7 @@
                         btn_class = "btn btn-success";
                     }
                     <input type="button" class="@btn_class" value="READY" onclick="location.href='@Url.Action("Ready", "Home", new { id = item.OrderNo })'" @btn_status/>
-                    <input type="button" class="btn btn-danger" value="DELETE" onclick="location.href='@Url.Action("Delete", "Home", new { id = item.OrderNo })'" />
+                    <input type="button" class="btn btn-danger" value="DELETE" onclick="location.href='@Url.Action("DeleteOrder", "Home", new { id = item.OrderNo })'" />
                 </td>
     </tr>
 }

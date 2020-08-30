@@ -36,3 +36,18 @@ textarea {
     color:black;
     font-family:'Comic Sans MS';
 }
+
+.bg-primary2 {
+    width:100%;
+    height:100%;
+}
+
+button.btn {
+    white-space: normal;
+    border:5px solid black;
+    background-color: #00ccff;
+    width: 300px;
+    height: 300px;
+    font-family:'Comic Sans MS';
+    font-size: 50px;
+}

@@ -4,6 +4,19 @@
     ViewBag.Title = "Menu";
 }
 
+<!--Used JS to get the value of the name textbox. C# code is run server-side so I couldn't get the name using that.-->
+<script>
+    function createOrder(drink) {
+        var name = document.getElementById('customer_name_txt').value;
+        if (name.length > 1) {
+            location.href = '@Url.Action("CreateOrder", "Home")/?customer_name=' + name + '&drink=' + drink;
+        }
+        else {
+            document.getElementById('name_warning').innerHTML = "Please enter a name for the order.";
+            
+        }
+    }
+</script>
 <h2>Menu</h2>
 
 @using (Html.BeginForm())
@@ -11,8 +24,9 @@
 
 
     <p>
+        <h3 class="alert-danger" color="red" id="name_warning"></h3>
         <label for="customer_name" >Name for order:</label>
-        <input type="text" id="customer_name" name="customer_name" />
+        <input type="text" id="customer_name_txt" name="customer_name" />
     </p>
     <table class="table">
         <tr>
@@ -61,7 +75,7 @@
                 </td>
                 <td>
                     <input type="text" name="drink" value="@item.Name" hidden>
-                    <input type="submit" class="btn btn-success" value="ORDER" />
+                    <input type="button" id="order" class="btn btn-success" value="ORDER" onclick="createOrder('@item.Name')"/>
                 </td>
             </tr>
         }

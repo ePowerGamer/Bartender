@@ -23,11 +23,12 @@ namespace Bartender.Controllers
             return View(db.Cocktails.ToList());
         }
 
-
-        [HttpPost]
-        public ActionResult Menu(string customer_name, string drink)
+        //Adds new order to the db
+        //[HttpPost]
+        public ActionResult CreateOrder(string customer_name, string drink, string dr)
         {
-            if (customer_name != "" && drink != null)
+            Debug.WriteLine(customer_name);
+            if (customer_name.Trim().Length > 1 && drink != null)
             {
                 orderDB.Orders.Add(new Order
                 {
@@ -42,22 +43,12 @@ namespace Bartender.Controllers
             return View("Index");
         }
 
-        public ActionResult Create(string name, string customer)
+        public ActionResult Create()
         {
-            if(name != null && customer != null)
-            {
-                orderDB.Orders.Add(new Order
-                {
-                    OrderNo = orderDB.Orders.OrderByDescending(o => o.OrderNo).First().OrderNo + 1,
-                    Cocktail = name,
-                    Customer = customer,
-                    Status = Order.State.PREPARING
-                });
-            }
-
-            return View("Index");
+            return View();
         }
 
+        //This is used for adding cocktails to the menu
         //[HttpPost]
         //[ValidateAntiForgeryToken]
         //public ActionResult Create(Cocktail cocktail)
@@ -74,6 +65,7 @@ namespace Bartender.Controllers
 
         public ActionResult Orders()
         {
+            Response.AddHeader("Refresh", "8");
             return View(orderDB.Orders.ToList());
         }
 
@@ -87,6 +79,26 @@ namespace Bartender.Controllers
             }
 
             return View("Orders", orderDB.Orders.ToList());
+        }
+
+        public ActionResult DeleteOrder(int? id)
+        {
+            if (id != null)
+            {
+                try
+                {
+                    var result = orderDB.Orders.Single(o => o.OrderNo == id);
+                    orderDB.Orders.Remove(result);
+                    orderDB.SaveChanges();
+                }
+                catch
+                {
+                    //Entry doesn't exist
+                }
+
+            }
+
+            return RedirectToAction("Orders");
         }
     }
 }

@@ -3,12 +3,12 @@
 }
 
 <div class="row">
+    <br />
     <div class="col-md-4">
-        @Html.ActionLink("Menu", "Menu")
+        <button class="btn" onclick="location.href='@Url.Action("Menu","Home")'">MENU</button>
     </div>
     <div class="col-md-4">
-        <h2>Order Queue</h2>
-        @Html.ActionLink("Queue", "Orders")
+        <button class="btn" onclick="location.href='@Url.Action("Orders", "Home")'">ORDER QUEUE</button>
     </div>
 
 </div>
