@@ -19,66 +19,60 @@
 </script>
 <h2>Menu</h2>
 
-@using (Html.BeginForm())
-{
+<p>
+    <h3 class="alert-danger" color="red" id="name_warning"></h3>
+    <label for="customer_name" >Name for order:</label>
+    <input type="text" id="customer_name_txt" name="customer_name" />
+</p>
+<table class="table">
+    <tr>
+        <th>
 
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th></th>
+    </tr>
 
-    <p>
-        <h3 class="alert-danger" color="red" id="name_warning"></h3>
-        <label for="customer_name" >Name for order:</label>
-        <input type="text" id="customer_name_txt" name="customer_name" />
-    </p>
-    <table class="table">
+    @foreach (var item in Model)
+    {
         <tr>
-            <th>
+            <td>
+                @{
 
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th></th>
-        </tr>
+                    string pic = Server.MapPath("../Content/Cocktails/" + item.Name + ".jpg");
+                    string path = "../Content/Cocktails/None.jpg";
+                    string alt = "Picture not found";
+                    if (File.Exists(pic))
+                    {
+                        path = "../Content/Cocktails/" + item.Name + ".jpg";
 
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @using System.Diagnostics;
-                    @{
-
-                        string pic = Server.MapPath("../Content/Cocktails/" + item.Name + ".jpg");
-                        string path = "../Content/Cocktails/None.jpg";
-                        string alt = "Picture not found";
-                        if (File.Exists(pic))
-                        {
-                            path = "../Content/Cocktails/" + item.Name + ".jpg";
-
-                            alt = item.Name;
-                        }
-                        <img src=@path alt=@alt />
+                        alt = item.Name;
                     }
-                </td>
-                <td id="name" name="name">
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    <input type="text" name="drink" value="@item.Name" hidden>
-                    <input type="button" id="order" class="btn btn-success" value="ORDER" onclick="createOrder('@item.Name')"/>
-                </td>
-            </tr>
-        }
+                    <img src=@path alt=@alt />
+                }
+            </td>
+            <td id="name" name="name">
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                <input type="button" id="order" class="btn btn-success" value="ORDER" onclick="createOrder('@item.Name')"/>
+            </td>
+        </tr>
+    }
 
-    </table>
-}
+</table>
+
