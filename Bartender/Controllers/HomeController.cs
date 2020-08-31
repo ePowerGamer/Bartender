@@ -37,7 +37,6 @@ namespace Bartender.Controllers
         /// <returns></returns>
         public ActionResult CreateOrder(string customer_name, string drink)
         {
-            Debug.WriteLine(customer_name);
             if (customer_name.Trim().Length > 1 && drink != null)
             {
                 orderDB.Orders.Add(new Order
